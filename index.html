@@ -54,11 +54,19 @@
       margin: 20px 0 10px;
       text-align: center;
     }
+    .sapaan {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #b03570;
+      text-align: center;
+    }
     .container, .location {
       transition: filter 0.3s ease;
     }
     .blur {
       filter: blur(5px);
+      pointer-events: none;
     }
     .container {
       margin: 20px;
@@ -161,6 +169,7 @@
 </nav>
 
 <h1>Undangan Pernikahan</h1>
+<p class="sapaan" id="sapaanNama"></p>
 
 <div class="container" id="home">
   <div class="photo-names">
@@ -213,6 +222,7 @@
 <script>
   const tanggal = '2025-06-19T09:00:00';
   const countdown = document.getElementById('countdown');
+
   setInterval(() => {
     const now = new Date().getTime();
     const eventTime = new Date(tanggal).getTime();
@@ -236,6 +246,36 @@
     const wa = `https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`;
     window.open(wa, '_blank');
   }
+
+  // Nama dari URL
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const nama = params.get('nama');
+    if (nama) {
+      const decodedNama = decodeURIComponent(nama.replace(/\+/g, ' '));
+      document.getElementById('rsvpNama').value = decodedNama;
+      document.getElementById('sapaanNama').textContent = `Halo, ${decodedNama}!`;
+    }
+  });
+
+  // Blur effect saat sitemap diklik
+  const sitemapLinks = document.querySelectorAll('#sitemap a');
+  sitemapLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.getAttribute('href').replace('#', '');
+      const allSections = ['home', 'journey', 'galeri', 'tentang', 'lokasi', 'rsvp'];
+      allSections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (id !== target) {
+            el.classList.add('blur');
+          } else {
+            el.classList.remove('blur');
+          }
+        }
+      });
+    });
+  });
 </script>
 
 </body>
