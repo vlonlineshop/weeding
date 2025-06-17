@@ -38,22 +38,20 @@
     text-decoration: none;
     cursor: pointer;
     transition: color 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 20px;
   }
   nav#sitemap a:hover {
     color: #ffedf5;
     text-shadow: 0 0 10px #fff;
-  }
-  h1, h2 {
-    font-family: 'Dancing Script', cursive;
-    color: #ff5ca1;
-    margin-bottom: 20px;
-    text-align: center;
+    background: #ff5ca1;
   }
   h1 {
-    font-size: 2.8rem;
-  }
-  h2 {
-    font-size: 2.2rem;
+    font-family: 'Dancing Script', cursive;
+    color: #ff5ca1;
+    font-size: 3rem;
+    margin: 20px 0 10px;
+    text-align: center;
   }
   .container {
     margin: 20px;
@@ -71,27 +69,28 @@
     transform: perspective(500px) rotateY(10deg) translateZ(20px);
     box-shadow: 0 0 40px 15px #ff9cc9;
   }
-  .photo {
-    margin-bottom: 20px;
-    transform-style: preserve-3d;
-    transition: transform 0.5s ease;
-    position: relative;
+  .photo-names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .photo img {
+  .photo-names img {
     max-width: 250px;
     border-radius: 50%;
     box-shadow: 0 0 30px 10px #ff9cc9;
     transition: transform 0.5s ease;
   }
-  .photo:hover img {
+  .photo-names img:hover {
     transform: translateZ(30px) rotateY(10deg);
     box-shadow: 0 0 40px 15px #ff9cc9;
   }
-  .photo .names {
+  .photo-names .names {
     margin-top: 15px;
-    font-size: 2rem;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.6rem;
     color: #ff5ca1;
     text-shadow: 2px 2px 10px #ff9cc9;
+    user-select: none;
   }
   p {
     font-size: 1.25rem;
@@ -117,6 +116,7 @@
     left: 10px;
     font-weight: 700;
     color: #b03570;
+    z-index: 2;
   }
   .road {
     width: 100%;
@@ -125,6 +125,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    z-index: 1;
   }
   .road::before {
     content:'';
@@ -141,6 +142,7 @@
     bottom: 0;
     left: -60px;
     animation: move 10s linear infinite;
+    z-index: 3;
   }
   @keyframes move {
     0% { left: -60px }
@@ -153,37 +155,31 @@
     margin-bottom: 15px;
   }
   .journey ul li {
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 15px;
+    padding: 15px;
     background: #ff9cc9;
     color: #fff;
-    border-radius: 10px;
+    border-radius: 15px;
     transform: translateX(-100px);
     animation: slideIn 0.5s ease forwards;
     animation-delay: var(--delay);
     opacity: 0;
     font-size: 1.2rem;
     font-weight: 700;
+    text-align: left;
+  }
+  .journey ul li small {
+    display: block;
+    font-weight: 400;
+    margin-top: 5px;
+    font-size: 1rem;
+    color: #ffe1f0cc;
   }
   @keyframes slideIn {
     to {
       transform: translateX(0);
       opacity: 1;
     }
-  }
-  #journeyDesc {
-    margin-top: 10px;
-    font-size: 1.15rem;
-    color: #b03570;
-    font-weight: 600;
-    line-height: 1.4;
-  }
-  #journeyPhoto {
-    margin-top: 15px;
-    width: 100%;
-    max-width: 320px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px #ff9cc9;
   }
   .countdown {
     margin-bottom: 20px;
@@ -230,14 +226,14 @@
 <h1>Undangan Pernikahan</h1>
 
 <div class="container" id="home">
-  <div class="photo">
+  <div class="photo-names">
     <img id="fotoPengantin" src="https://via.placeholder.com/250x250.png?text=Foto+Pengantin" alt="Foto Pengantin" />
     <div class="names">Adit &amp; Bunga</div>
   </div>
 
-  <p id="namaTamu">Tamu Undangan: </p>
+  <p id="namaTamu">Bapak/Ibu</p>
 
-  <p>Tanggal pernikahan: <span id="weddingDateText"></span></p>
+  <p><span id="weddingDateText"></span></p>
 
   <div class="countdown">
     <span id="countdown"></span>
@@ -251,11 +247,6 @@
 <div class="container journey" id="journey">
   <h2>💖 Journey Wedding</h2>
   <ul id="journeyList"></ul>
-  <p id="journeyDesc">
-    Dari awal kenalan hingga perjalanan cinta kami yang penuh cerita hingga sampai ke hari bahagia ini.  
-    Terima kasih atas dukungan dan doa kalian semua.
-  </p>
-  <img id="journeyPhoto" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Foto Journey" />
 </div>
 
 <div class="container location" id="lokasi">
@@ -270,7 +261,7 @@
   <ul>
     <li>Transfer amplop digital ke rekening pengantin</li>
     <li>Nomor rekening: <strong>1234 5678 9012 3456 (Bank ABC)</strong></li>
-    <li>Atas nama: <strong>Adit & Bunga</strong></li>
+    <li>Atas nama: <strong>Adit &amp; Bunga</strong></li>
     <li>Pastikan memasukkan nama Anda sebagai berita transfer</li>
     <li>Konfirmasi transfer ke pengantin via WA/Telepon</li>
   </ul>
@@ -278,29 +269,36 @@
 </div>
 
 <script>
+  // Ambil nama tamu dari URL param ?namaTamu=
   function getParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   }
 
   const namaTamu = decodeURIComponent(getParam('namaTamu') || 'Tamu');
-  const journeyRaw = 'Kenal 2019, Pacaran 2020, Menikah 2025';
   const tanggal = '2025-12-12';
 
   document.getElementById('namaTamu').innerHTML = `Tamu Undangan: <strong>Bapak / Ibu ${namaTamu}</strong>`;
   document.getElementById('weddingDateText').textContent = new Date(tanggal).toLocaleDateString('id-ID', { year:'numeric', month:'long', day:'numeric' });
 
-  // Journey list
+  // Journey dengan deskripsi tiap tahun
+  const journeyData = [
+    { year: 2017, event: 'Pacaran', desc: 'Mulai berkenalan dan menjalani kisah cinta penuh warna.' },
+    { year: 2019, event: 'Lamaran', desc: 'Momen bahagia saat melamar pasangan tercinta.' },
+    { year: 2022, event: 'Menikah', desc: 'Hari pernikahan kami yang penuh kebahagiaan.' },
+  ];
+
   const journeyList = document.getElementById('journeyList');
   journeyList.innerHTML = '';
-  journeyRaw.split(',').forEach((item, i) => {
+
+  journeyData.forEach(({year, event, desc}, i) => {
     const li = document.createElement('li');
     li.style.setProperty('--delay', `${0.5 + i * 0.5}s`);
-    li.textContent = item.trim();
+    li.innerHTML = `<strong>${year} - ${event}</strong><br><small>${desc}</small>`;
     journeyList.appendChild(li);
   });
 
-  // Audio unmute after 2 sec
+  // Audio unmute setelah delay agar autoplay berhasil di browser modern
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.getElementById('audio').muted = false;
