@@ -6,9 +6,7 @@
   <title>Undangan Pernikahan</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Open+Sans&display=swap" rel="stylesheet" />
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       background: linear-gradient(135deg, #ffedf5 0%, #ffe3f1 100%);
@@ -33,6 +31,9 @@
       font-weight: 700;
       font-size: 1.1rem;
       user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     nav#sitemap a {
       color: #fff;
@@ -52,6 +53,12 @@
       font-size: 3rem;
       margin: 20px 0 10px;
       text-align: center;
+    }
+    .container, .location {
+      transition: filter 0.3s ease;
+    }
+    .blur {
+      filter: blur(5px);
     }
     .container {
       margin: 20px;
@@ -128,7 +135,6 @@
       text-align: center;
       font-size: 0.95rem;
       color: #b03570;
-      animation: fadeIn 1s ease-out;
     }
     .location-detail h3 {
       margin-top: 0;
@@ -146,17 +152,8 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
-    .map-link:hover {
-      background: #d94385;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .journey ul {
-      list-style: none;
-      padding: 0;
-    }
+    .map-link:hover { background: #d94385; }
+    .journey ul { list-style: none; padding: 0; }
     .journey li {
       margin: 15px 0;
       background: #ff9cc9;
@@ -169,12 +166,7 @@
     .journey li:nth-child(1) { animation-delay: 0.5s; }
     .journey li:nth-child(2) { animation-delay: 1s; }
     .journey li:nth-child(3) { animation-delay: 1.5s; }
-    @keyframes fadeSlide {
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
+    @keyframes fadeSlide { to { transform: translateX(0); opacity: 1; } }
     .rsvp {
       margin-top: 20px;
       text-align: center;
@@ -211,9 +203,18 @@
   <a href="#rsvp">📩 RSVP</a>
 </nav>
 
+<!-- Backsound -->
+<audio id="backsound" autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Tombol kontrol audio -->
+<button onclick="toggleAudio()" style="position: fixed; bottom: 20px; right: 20px; background: #ff9cc9; border: none; padding: 10px 15px; border-radius: 50px; font-size: 1.2rem; box-shadow: 0 0 10px #ff9cc9; cursor: pointer; color: white; z-index: 999;">🔊</button>
+
 <h1>Undangan Pernikahan</h1>
 
-<div class="container" id="home">
+<div class="container" id="home" data-section="home">
   <div class="photo-names">
     <img src="https://i.pinimg.com/736x/bd/e6/63/bde6632648dfb57d0ce2d21f09f9fcd0.jpg" alt="Foto Pengantin">
     <div class="names">Adit &amp; Bunga</div>
@@ -222,7 +223,7 @@
   <div class="countdown" id="countdown"></div>
 </div>
 
-<div class="container journey" id="journey">
+<div class="container journey" id="journey" data-section="journey">
   <h2>💖 Perjalanan Cinta</h2>
   <ul>
     <li><strong>2017 - Pacaran</strong><br><small>Mulai berkenalan dan menjalani kisah cinta.</small></li>
@@ -231,7 +232,7 @@
   </ul>
 </div>
 
-<div class="location" id="lokasi">
+<div class="location" id="lokasi" data-section="lokasi">
   <div class="location-detail">
     <h3>📍 Lokasi Acara</h3>
     <p><strong>Gedung Serbaguna Harmoni</strong><br>Jl. Melati No. 88, Jakarta Selatan</p>
@@ -241,7 +242,7 @@
   <img src="png.png" class="car" alt="Mobil">
 </div>
 
-<div class="container rsvp" id="rsvp">
+<div class="container rsvp" id="rsvp" data-section="rsvp">
   <div id="namaTamuUndangan"></div>
   <h2>📩 RSVP Kehadiran</h2>
   <input type="text" id="rsvpNama" placeholder="Nama Anda" />
@@ -253,7 +254,7 @@
 </div>
 
 <script>
-  const tanggal = '202506-19T09:00:00';
+  const tanggal = '2025-06-19T09:00:00';
   const countdown = document.getElementById('countdown');
   setInterval(() => {
     const now = new Date().getTime();
@@ -274,7 +275,6 @@
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   }
-
   const namaTamu = getQueryParam('nama');
   if (namaTamu) {
     const namaTamuDecoded = decodeURIComponent(namaTamu);
@@ -282,7 +282,6 @@
       `<h2>Halo, ${namaTamuDecoded}!</h2><p>Dengan senang hati kami mengundang Anda ke hari bahagia kami.</p>`;
     document.getElementById('rsvpNama').value = namaTamuDecoded;
   }
-
   function kirimRSVP() {
     const nama = document.getElementById('rsvpNama').value.trim();
     const status = document.getElementById('rsvpStatus').value;
@@ -291,6 +290,42 @@
     const wa = `https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`;
     window.open(wa, '_blank');
   }
+
+  const audio = document.getElementById("backsound");
+  let isPlaying = true;
+  function toggleAudio() {
+    if (isPlaying) {
+      audio.pause();
+      event.target.textContent = "🔈";
+    } else {
+      audio.play();
+      event.target.textContent = "🔊";
+    }
+    isPlaying = !isPlaying;
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        isPlaying = false;
+        document.querySelector('button').textContent = "🔈";
+      });
+    }
+  });
+
+  const sections = document.querySelectorAll('[data-section]');
+  document.querySelectorAll('#sitemap a').forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.getAttribute('href').replace('#', '');
+      sections.forEach(sec => {
+        if (sec.getAttribute('data-section') !== target) {
+          sec.classList.add('blur');
+        } else {
+          sec.classList.remove('blur');
+        }
+      });
+    });
+  });
 </script>
 </body>
 </html>
