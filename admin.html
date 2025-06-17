@@ -25,6 +25,17 @@
       width: 100%;
       box-shadow: 0 0 20px 5px rgba(255, 156, 201, 0.3);
       text-align: center;
+      display: none;
+    }
+
+    .auth-container {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 20px 5px rgba(255, 156, 201, 0.3);
+      text-align: center;
     }
 
     h1 {
@@ -33,7 +44,7 @@
       margin-bottom: 25px;
     }
 
-    input[type="text"] {
+    input[type="text"], input[type="password"] {
       width: 100%;
       padding: 12px;
       font-size: 1rem;
@@ -68,22 +79,19 @@
       color: #b03570;
       text-decoration: underline;
     }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      input[type="text"],
-      button {
-        font-size: 0.95rem;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <!-- Halaman Auth -->
+  <div class="auth-container" id="authContainer">
+    <h1>Kode Akses Admin</h1>
+    <input id="accessCode" type="password" placeholder="Masukkan Kode Akses">
+    <button onclick="verifyAccess()">Masuk</button>
+  </div>
+
+  <!-- Halaman Admin -->
+  <div class="container" id="adminContainer">
     <h1>Admin Undangan</h1>
     <input id="namaTamu" type="text" placeholder="Masukkan Nama Tamu">
     <button onclick="generateLink()">Buat Link Undangan</button>
@@ -92,6 +100,19 @@
   </div>
 
   <script>
+    const KODE_AKSES = "PREMIUMVL";
+
+    function verifyAccess() {
+      const codeInput = document.getElementById('accessCode').value.trim();
+      if (codeInput === KODE_AKSES) {
+        document.getElementById('authContainer').style.display = 'none';
+        document.getElementById('adminContainer').style.display = 'block';
+      } else {
+        alert("Kode akses salah! Anda akan dialihkan keluar.");
+        window.location.href = "about:blank"; // Bisa diganti ke halaman lain
+      }
+    }
+
     function capitalizeWords(str) {
       return str.replace(/\b\w/g, char => char.toUpperCase());
     }
@@ -103,7 +124,6 @@
         return;
       }
 
-      // Validasi: hanya huruf dan spasi
       if (!/^[a-zA-Z\s]+$/.test(name)) {
         alert("Nama hanya boleh mengandung huruf dan spasi.");
         return;
@@ -116,8 +136,7 @@
       link.textContent = url;
       link.style.display = 'block';
 
-      const copyBtn = document.getElementById('copyBtn');
-      copyBtn.style.display = 'inline-block';
+      document.getElementById('copyBtn').style.display = 'inline-block';
     }
 
     function copyLink() {
