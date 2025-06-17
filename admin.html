@@ -17,7 +17,8 @@
       min-height: 100vh;
     }
 
-    .auth-container {
+    .auth-container,
+    .admin-container {
       background: #fff;
       padding: 30px 25px;
       border-radius: 20px;
@@ -25,6 +26,12 @@
       width: 100%;
       box-shadow: 0 0 20px 5px rgba(255, 156, 201, 0.3);
       text-align: center;
+      display: none;
+    }
+
+    .auth-container.active,
+    .admin-container.active {
+      display: block;
     }
 
     h1 {
@@ -33,7 +40,8 @@
       margin-bottom: 25px;
     }
 
-    input[type="password"] {
+    input[type="password"],
+    input[type="text"] {
       width: 100%;
       padding: 12px;
       font-size: 1rem;
@@ -53,6 +61,7 @@
       border-radius: 10px;
       cursor: pointer;
       transition: background 0.3s ease;
+      margin-bottom: 10px;
     }
 
     button:hover {
@@ -65,15 +74,33 @@
       font-size: 0.95rem;
       margin-top: 15px;
     }
+
+    a {
+      display: block;
+      color: #ff5ca1;
+      text-decoration: none;
+      word-wrap: break-word;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
 
-  <div class="auth-container">
+  <!-- Login Access -->
+  <div class="auth-container active" id="loginBox">
     <h1>Kode Akses Admin</h1>
     <input id="accessCode" type="password" placeholder="Masukkan Kode Akses">
     <button onclick="verifyAccess()">Masuk</button>
-    <p class="loading-text" id="loadingText">Sedang mengalihkan ke halaman admin...</p>
+    <p class="loading-text" id="loadingText">Mengalihkan ke halaman admin...</p>
+  </div>
+
+  <!-- Admin Area -->
+  <div class="admin-container" id="adminArea">
+    <h1>Admin Undangan</h1>
+    <input id="namaTamu" type="text" placeholder="Masukkan Nama Tamu">
+    <button onclick="generateLink()">Buat Link Undangan</button>
+    <a id="generatedLink" target="_blank" style="display: none;"></a>
+    <button onclick="copyLink()" id="copyBtn" style="display: none;">Salin Link</button>
   </div>
 
   <script>
@@ -85,9 +112,10 @@
 
       if (input === KODE_AKSES) {
         loadingText.style.display = "block";
+
         setTimeout(() => {
-          // Arahkan ke halaman admin setelah 1.5 detik
-          window.location.href = "admin.html"; // Ganti jika perlu
+          document.getElementById('loginBox').classList.remove('active');
+          document.getElementById('adminArea').classList.add('active');
         }, 1500);
       } else {
         alert("Kode salah, silakan coba lagi.");
@@ -95,6 +123,39 @@
           location.reload();
         }, 500);
       }
+    }
+
+    function capitalizeWords(str) {
+      return str.replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    function generateLink() {
+      let name = document.getElementById('namaTamu').value.trim();
+      if (name === '') {
+        alert('Silakan masukkan nama tamu terlebih dahulu.');
+        return;
+      }
+
+      if (!/^[a-zA-Z\s]+$/.test(name)) {
+        alert("Nama hanya boleh mengandung huruf dan spasi.");
+        return;
+      }
+
+      name = capitalizeWords(name);
+      const url = `${location.origin}/weeding/index.html?nama=${encodeURIComponent(name)}`;
+      const link = document.getElementById('generatedLink');
+      link.href = url;
+      link.textContent = url;
+      link.style.display = 'block';
+
+      document.getElementById('copyBtn').style.display = 'inline-block';
+    }
+
+    function copyLink() {
+      const link = document.getElementById('generatedLink').href;
+      navigator.clipboard.writeText(link).then(() => {
+        alert("Link disalin ke clipboard!");
+      });
     }
   </script>
 
