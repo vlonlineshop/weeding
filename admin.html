@@ -106,6 +106,41 @@
   <script>
     const KODE_AKSES = "PREMIUMVL";
 
+    // Fungsi untuk mendeteksi jika Developer Tools dibuka
+    function detectDevTools() {
+      let devtools = /./;
+      devtools.toString = function () {
+        alert("Developer Tools tidak boleh dibuka!");
+        window.location.reload();
+      };
+      console.log(devtools);
+    }
+
+    // Mendeteksi perubahan ukuran jendela untuk memblokir devtools
+    function detectDevToolsWindow() {
+      const threshold = 160;
+      let devtoolsOpen = false;
+      setInterval(() => {
+        const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+        const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+        if (widthThreshold || heightThreshold) {
+          devtoolsOpen = true;
+        } else {
+          devtoolsOpen = false;
+        }
+        if (devtoolsOpen) {
+          alert("Developer Tools tidak boleh dibuka!");
+          window.location.reload();
+        }
+      }, 1000);
+    }
+
+    // Panggil fungsi deteksi devtools saat halaman dimuat
+    window.onload = function () {
+      detectDevTools();
+      detectDevToolsWindow();
+    };
+
     function verifyAccess() {
       const input = document.getElementById('accessCode').value.trim();
       const loadingText = document.getElementById('loadingText');
@@ -124,67 +159,6 @@
         }, 500);
       }
     }
-
-    function capitalizeWords(str) {
-      return str.replace(/\b\w/g, char => char.toUpperCase());
-    }
-
-    function generateLink() {
-      let name = document.getElementById('namaTamu').value.trim();
-      if (name === '') {
-        alert('Silakan masukkan nama tamu terlebih dahulu.');
-        return;
-      }
-
-      if (!/^[a-zA-Z\s]+$/.test(name)) {
-        alert("Nama hanya boleh mengandung huruf dan spasi.");
-        return;
-      }
-
-      name = capitalizeWords(name);
-      const url = `${location.origin}/weeding/index.html?nama=${encodeURIComponent(name)}`;
-      const link = document.getElementById('generatedLink');
-      link.href = url;
-      link.textContent = url;
-      link.style.display = 'block';
-
-      document.getElementById('copyBtn').style.display = 'inline-block';
-    }
-
-    function copyLink() {
-      const link = document.getElementById('generatedLink').href;
-      navigator.clipboard.writeText(link).then(() => {
-        alert("Link disalin ke clipboard!");
-      });
-    }
-
-    // Memblokir klik kanan dan menu konteks
-    document.addEventListener('contextmenu', function (e) {
-      e.preventDefault();
-    });
-
-    // Memblokir kombinasi tombol (Ctrl+U, F12, Ctrl+Shift+I)
-    document.addEventListener('keydown', function (e) {
-      if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
-        e.preventDefault(); // Mencegah Ctrl+U
-      }
-      if (e.key === 'F12') {
-        e.preventDefault(); // Mencegah F12
-      }
-      if (e.ctrlKey && (e.key === 'I' || e.key === 'i')) {
-        e.preventDefault(); // Mencegah Ctrl+Shift+I (inspect element)
-      }
-    });
-
-    // Memblokir deteksi pembukaan DevTools dengan resize window
-    let devtoolsOpened = false;
-    setInterval(function() {
-      if (window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100) {
-        devtoolsOpened = true;
-        alert("Developer Tools diblokir!");
-        window.location.reload();
-      }
-    }, 1000);
   </script>
 
 </body>
