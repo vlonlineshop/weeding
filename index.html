@@ -1,232 +1,262 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Undangan Pernikahan Adit & Bunga</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Open+Sans&display=swap" rel="stylesheet" />
-  <style>
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: #ffedf5;
-      color: #b03570;
-      font-family: 'Open Sans', sans-serif;
-      padding-bottom: 50px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Undangan Pernikahan</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Open+Sans&display=swap" rel="stylesheet" />
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #ffedf5 0%, #ffe3f1 100%);
+    color: #b03570;
+    font-family: 'Open Sans', sans-serif;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    perspective: 1000px;
+  }
+  nav#sitemap {
+    background: #ff9cc9;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 30px;
+    margin: 15px 0;
+    padding: 10px 0;
+    box-shadow: 0 0 20px 5px #ff9cc9cc;
+    display: flex;
+    justify-content: space-around;
+    font-weight: 700;
+    font-size: 1.1rem;
+    user-select: none;
+  }
+  nav#sitemap a {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 20px;
+  }
+  nav#sitemap a:hover {
+    background: #ff5ca1;
+    transform: scale(1.1);
+  }
+  h1 {
+    font-family: 'Dancing Script', cursive;
+    color: #ff5ca1;
+    font-size: 3rem;
+    margin: 20px 0 10px;
+    text-align: center;
+  }
+  .container {
+    margin: 20px;
+    padding: 20px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px 10px #ff9cc9;
+    border-radius: 30px;
+    text-align: center;
+    transform-style: preserve-3d;
+    animation: float 5s ease-in-out infinite;
+    max-width: 350px;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .photo-names img {
+    max-width: 250px;
+    border-radius: 50%;
+    box-shadow: 0 0 30px 10px #ff9cc9;
+    transition: transform 0.5s ease;
+  }
+  .photo-names img:hover {
+    transform: rotateY(10deg) scale(1.05);
+  }
+  .names {
+    margin-top: 15px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.6rem;
+    color: #ff5ca1;
+    text-shadow: 2px 2px 10px #ff9cc9;
+  }
+  .countdown {
+    margin: 15px 0;
+    font-size: 1.5rem;
+    background: #fff0f6;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 0 20px 5px #ff9cc9cc;
+    font-weight: bold;
+  }
+  .location {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 220px;
+    background: url('https://i.ibb.co/fD4ksJf/road.png') repeat-x bottom / contain;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 5px solid #ff9cc9;
+    box-shadow: 0 0 30px 10px #ff9cc9;
+  }
+  .location .car {
+    width: 100px;
+    position: absolute;
+    bottom: 20px;
+    animation: drive 10s linear infinite;
+  }
+  @keyframes drive {
+    0% { left: -120px; }
+    100% { left: 100%; }
+  }
+  .journey ul {
+    list-style: none;
+    padding: 0;
+  }
+  .journey li {
+    margin: 15px 0;
+    background: #ff9cc9;
+    color: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    animation: fadeSlide 0.5s ease forwards;
+    opacity: 0;
+  }
+  .journey li:nth-child(1) { animation-delay: 0.5s; }
+  .journey li:nth-child(2) { animation-delay: 1s; }
+  .journey li:nth-child(3) { animation-delay: 1.5s; }
+  @keyframes fadeSlide {
+    to {
+      transform: translateX(0);
+      opacity: 1;
     }
-    nav#sitemap {
-      background: #ff9cc9;
-      width: 100%;
-      max-width: 400px;
-      border-radius: 30px;
-      margin: 15px 0;
-      padding: 10px 0;
-      box-shadow: 0 0 20px 5px #ff9cc9cc;
-      display: flex;
-      justify-content: space-around;
-      font-weight: 700;
-      font-size: 1.1rem;
-      user-select: none;
-    }
-    nav#sitemap a {
-      color: #fff;
-      text-decoration: none;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      padding: 8px 12px;
-      border-radius: 20px;
-    }
-    nav#sitemap a:hover {
-      color: #ffedf5;
-      text-shadow: 0 0 10px #fff;
-      background: #ff5ca1;
-    }
-    h1 {
-      font-family: 'Dancing Script', cursive;
-      color: #ff5ca1;
-      font-size: 3rem;
-      margin: 20px 0 10px;
-      text-align: center;
-    }
-    .container {
-      margin: 20px;
-      padding: 20px;
-      background: #ffffffcc;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 30px 10px #ff9cc9;
-      border-radius: 30px;
-      text-align: center;
-      max-width: 350px;
-    }
-    .photo-names img {
-      max-width: 250px;
-      border-radius: 50%;
-      box-shadow: 0 0 30px 10px #ff9cc9;
-    }
-    .names {
-      margin-top: 15px;
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.6rem;
-      color: #ff5ca1;
-    }
-    .countdown {
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-      background: #ffedf5;
-      border-radius: 20px;
-      box-shadow: 0 0 30px 10px #ff9cc9;
-      font-weight: 700;
-    }
-    .audio audio { display: none; }
-    .location, .journey, .tips, #rsvp { margin-bottom: 30px; }
-    .tips ul, #rsvp ul { text-align: left; }
-    #rsvp form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    #rsvp input, #rsvp select, #rsvp button {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      font-size: 1rem;
-    }
-    button#printBtn, button#whatsappBtn {
-      margin: 5px;
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
-      background: #ff5ca1;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    @media print {
-      nav#sitemap, .countdown, .audio, .tips, .location, .journey, #rsvp, #whatsappBtn, #printBtn {
-        display: none !important;
-      }
-    }
-  </style>
+  }
+  .rsvp {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .rsvp input, .rsvp select, .rsvp button {
+    width: 90%;
+    padding: 10px;
+    margin: 8px auto;
+    border-radius: 10px;
+    border: 2px solid #ff9cc9;
+    font-size: 1rem;
+  }
+  .rsvp button {
+    background: #ff9cc9;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  #namaTamuUndangan {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: #ff5ca1;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 5px #ff9cc9;
+  }
+</style>
 </head>
 <body>
-  <nav id="sitemap">
-    <a href="#home">🏠 Home</a>
-    <a href="#journey">💖 Journey</a>
-    <a href="#lokasi">📍 Lokasi</a>
-    <a href="#tips">💡 Tips</a>
-    <a href="#rsvp">📋 RSVP</a>
-  </nav>
 
-  <h1>Undangan Pernikahan</h1>
+<nav id="sitemap">
+  <a href="#home">🏠 Home</a>
+  <a href="#journey">💖 Journey</a>
+  <a href="#lokasi">📍 Lokasi</a>
+  <a href="#rsvp">📩 RSVP</a>
+</nav>
 
-  <div class="container" id="home">
-    <div class="photo-names">
-      <img src="https://via.placeholder.com/250x250.png?text=Foto+Pengantin" alt="Foto Pengantin" />
-      <div class="names">Adit &amp; Bunga</div>
-    </div>
-    <p id="namaTamu">Tamu Undangan</p>
-    <p><span id="weddingDateText"></span></p>
-    <div class="countdown"><span id="countdown"></span></div>
-    <div class="audio">
-      <audio id="audio" autoplay loop muted src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-    </div>
-    <button id="printBtn" onclick="window.print()">🖨️ Cetak Undangan</button>
-    <button id="whatsappBtn" onclick="generateWhatsAppLink()">📩 Kirim via WhatsApp</button>
+<h1>Undangan Pernikahan</h1>
+<div class="container" id="home">
+  <div class="photo-names">
+    <img src="https://via.placeholder.com/250x250.png?text=Pengantin" alt="Foto Pengantin">
+    <div class="names">Adit &amp; Bunga</div>
   </div>
+  <div class="countdown" id="countdown"></div>
+</div>
 
-  <div class="container journey" id="journey">
-    <h2>💖 Journey</h2>
-    <ul id="journeyList"></ul>
-  </div>
+<div class="container journey" id="journey">
+  <h2>💖 Perjalanan Cinta</h2>
+  <ul>
+    <li><strong>2017 - Pacaran</strong><br><small>Mulai berkenalan dan menjalani kisah cinta.</small></li>
+    <li><strong>2019 - Lamaran</strong><br><small>Momen lamaran yang berkesan dan bahagia.</small></li>
+    <li><strong>2022 - Menikah</strong><br><small>Resmi menjadi pasangan hidup selamanya.</small></li>
+  </ul>
+</div>
 
-  <div class="container location" id="lokasi">
-    <p>📍 Lokasi: Jalan ABC, Setelah Alfamart, Belok Kiri</p>
-  </div>
+<div class="location" id="lokasi">
+  <img src="https://cdn.pixabay.com/photo/2017/01/31/20/22/auto-2029582_1280.png" class="car" alt="Mobil">
+</div>
 
-  <div class="tips container" id="tips">
-    <h2>💡 Tips Amplop Online</h2>
-    <ul>
-      <li>Transfer ke: <strong>1234 5678 9012 3456 (Bank ABC)</strong></li>
-      <li>Atas nama: <strong>Adit &amp; Bunga</strong></li>
-      <li>Sertakan nama Anda di berita transfer</li>
-    </ul>
-  </div>
+<div class="container rsvp" id="rsvp">
+  <div id="namaTamuUndangan"></div>
+  <h2>📩 RSVP Kehadiran</h2>
+  <input type="text" id="rsvpNama" placeholder="Nama Anda" />
+  <select id="rsvpStatus">
+    <option value="Hadir">Hadir</option>
+    <option value="Tidak Hadir">Tidak Hadir</option>
+  </select>
+  <button onclick="kirimRSVP()">Kirim ke WhatsApp</button>
+</div>
 
-  <div class="container" id="rsvp">
-    <h2>📋 Konfirmasi Kehadiran (RSVP)</h2>
-    <form onsubmit="submitRSVP(event)">
-      <input type="text" id="rsvpName" placeholder="Nama Anda" required />
-      <select id="rsvpStatus" required>
-        <option value="">-- Pilih Kehadiran --</option>
-        <option value="Hadir">Hadir</option>
-        <option value="Tidak Hadir">Tidak Hadir</option>
-      </select>
-      <button type="submit">Kirim</button>
-      <p id="rsvpMsg"></p>
-    </form>
-  </div>
+<script>
+  // Countdown timer
+  const tanggal = '2025-12-12T09:00:00';
+  const countdown = document.getElementById('countdown');
+  setInterval(() => {
+    const now = new Date().getTime();
+    const eventTime = new Date(tanggal).getTime();
+    const distance = eventTime - now;
 
-  <script>
-    const namaTamu = decodeURIComponent(new URLSearchParams(location.search).get('namaTamu') || 'Tamu');
-    const tanggal = '2025-12-12';
-
-    document.getElementById('namaTamu').innerHTML = `Tamu Undangan: <strong>Bapak/Ibu ${namaTamu}</strong>`;
-    document.getElementById('weddingDateText').textContent = new Date(tanggal).toLocaleDateString('id-ID', { year:'numeric', month:'long', day:'numeric' });
-
-    const journeyData = [
-      { year: 2017, event: 'Pacaran', desc: 'Berkenalan dan jatuh cinta.' },
-      { year: 2019, event: 'Lamaran', desc: 'Momen melamar pasangan.' },
-      { year: 2022, event: 'Menikah', desc: 'Hari bahagia pernikahan.' },
-    ];
-    journeyData.forEach(({year, event, desc}) => {
-      const li = document.createElement('li');
-      li.innerHTML = `<strong>${year} - ${event}</strong><br><small>${desc}</small>`;
-      document.getElementById('journeyList').appendChild(li);
-    });
-
-    setTimeout(() => document.getElementById('audio').muted = false, 2000);
-
-    const countDownDate = new Date(tanggal + 'T09:00:00').getTime();
-    setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
-      const cd = document.getElementById('countdown');
-      if (distance > 0) {
-        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((distance % (1000 * 60)) / 1000);
-        cd.textContent = `${d} hari ${h} jam ${m} menit ${s} detik`;
-      } else {
-        cd.textContent = 'Sudah menikah ❤️';
-      }
-    }, 1000);
-
-    function generateWhatsAppLink() {
-      const url = `${location.origin}${location.pathname}?namaTamu=${encodeURIComponent(namaTamu)}`;
-      const pesan = `Halo, ini undangan pernikahan untuk Anda 🙏❤️\n\n${url}`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(pesan)}`);
+    if (distance > 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      countdown.textContent = `${days} hari ${hours} jam ${minutes} menit ${seconds} detik menuju hari bahagia.`;
+    } else {
+      countdown.textContent = 'Kami sudah menikah ❤️';
     }
+  }, 1000);
 
-    function submitRSVP(e) {
-      e.preventDefault();
-      const name = document.getElementById('rsvpName').value.trim();
-      const status = document.getElementById('rsvpStatus').value;
-      const msg = document.getElementById('rsvpMsg');
-      if (name && status) {
-        const daftar = JSON.parse(localStorage.getItem('rsvpList') || '[]');
-        daftar.push({ name, status });
-        localStorage.setItem('rsvpList', JSON.stringify(daftar));
-        msg.textContent = 'Terima kasih atas konfirmasi Anda!';
-        msg.style.color = 'green';
-      } else {
-        msg.textContent = 'Mohon isi semua data';
-        msg.style.color = 'red';
-      }
+  // Ambil parameter URL "nama"
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  const namaTamu = getQueryParam('nama');
+  if (namaTamu) {
+    const namaTamuDecoded = decodeURIComponent(namaTamu);
+
+    // Tampilkan salam undangan khusus dengan nama tamu
+    const namaTamuElement = document.getElementById('namaTamuUndangan');
+    namaTamuElement.innerHTML = `<h2>Halo, ${namaTamuDecoded}!</h2><p>Dengan senang hati kami mengundang Anda ke hari bahagia kami.</p>`;
+
+    // Isi otomatis input Nama Anda pada form RSVP
+    const rsvpNamaInput = document.getElementById('rsvpNama');
+    if (rsvpNamaInput) {
+      rsvpNamaInput.value = namaTamuDecoded;
     }
-  </script>
+  }
+
+  function kirimRSVP() {
+    const nama = document.getElementById('rsvpNama').value.trim();
+    const status = document.getElementById('rsvpStatus').value;
+    if (!nama) return alert('Masukkan nama terlebih dahulu');
+    const pesan = `Halo Adit & Bunga! Saya *${nama}* akan *${status}* pada acara pernikahan.`;
+    const wa = `https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`;
+    window.open(wa, '_blank');
+  }
+</script>
+
 </body>
 </html>
