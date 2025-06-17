@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Undangan Pernikahan</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Open+Sans&display=swap" rel="stylesheet" />
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    background: #ffedf5;
+    color: #b03570;
+    font-family: 'Open Sans', sans-serif;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  nav#sitemap {
+    background: #ff9cc9;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 30px;
+    margin: 15px 0;
+    padding: 10px 0;
+    box-shadow: 0 0 20px 5px #ff9cc9cc;
+    display: flex;
+    justify-content: space-around;
+    font-weight: 700;
+    font-size: 1.1rem;
+    user-select: none;
+  }
+  nav#sitemap a {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  nav#sitemap a:hover {
+    color: #ffedf5;
+    text-shadow: 0 0 10px #fff;
+  }
+  h1, h2 {
+    font-family: 'Dancing Script', cursive;
+    color: #ff5ca1;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  h1 {
+    font-size: 2.8rem;
+  }
+  h2 {
+    font-size: 2.2rem;
+  }
+  .container {
+    margin: 20px;
+    padding: 20px;
+    background: #ffffffcc;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px 10px #ff9cc9;
+    border-radius: 30px;
+    text-align: center;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    max-width: 350px;
+  }
+  .container:hover {
+    transform: perspective(500px) rotateY(10deg) translateZ(20px);
+    box-shadow: 0 0 40px 15px #ff9cc9;
+  }
+  .photo {
+    margin-bottom: 20px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    position: relative;
+  }
+  .photo img {
+    max-width: 250px;
+    border-radius: 50%;
+    box-shadow: 0 0 30px 10px #ff9cc9;
+    transition: transform 0.5s ease;
+  }
+  .photo:hover img {
+    transform: translateZ(30px) rotateY(10deg);
+    box-shadow: 0 0 40px 15px #ff9cc9;
+  }
+  .photo .names {
+    margin-top: 15px;
+    font-size: 2rem;
+    color: #ff5ca1;
+    text-shadow: 2px 2px 10px #ff9cc9;
+  }
+  p {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  .audio {
+    margin-bottom: 20px;
+  }
+  .location {
+    margin-bottom: 20px;
+    position: relative;
+    height: 200px;
+    background: #fff5fa;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 5px solid #ff9cc9;
+    box-shadow: 0 0 30px 10px #ff9cc9;
+  }
+  .location p {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    font-weight: 700;
+    color: #b03570;
+  }
+  .road {
+    width: 100%;
+    height: 60px;
+    background: #666;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  .road::before {
+    content:'';
+    width: 100%;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, #fff, #fff 20px, transparent 20px, transparent 40px);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .motor {
+    width: 60px;
+    position: absolute;
+    bottom: 0;
+    left: -60px;
+    animation: move 10s linear infinite;
+  }
+  @keyframes move {
+    0% { left: -60px }
+    50% { left: 50% }
+    100% { left: 100% }
+  }
+  .journey ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+  }
+  .journey ul li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #ff9cc9;
+    color: #fff;
+    border-radius: 10px;
+    transform: translateX(-100px);
+    animation: slideIn 0.5s ease forwards;
+    animation-delay: var(--delay);
+    opacity: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  @keyframes slideIn {
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  #journeyDesc {
+    margin-top: 10px;
+    font-size: 1.15rem;
+    color: #b03570;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  #journeyPhoto {
+    margin-top: 15px;
+    width: 100%;
+    max-width: 320px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #ff9cc9;
+  }
+  .countdown {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #ff5ca1;
+    padding: 15px;
+    background: #ffedf5;
+    border-radius: 20px;
+    box-shadow: 0 0 30px 10px #ff9cc9;
+    font-weight: 700;
+  }
+  .tips {
+    max-width: 350px;
+    background: #fff0f6cc;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 0 20px 5px #ff9cc9cc;
+    margin-bottom: 30px;
+    text-align: left;
+    color: #b03570;
+    font-weight: 600;
+  }
+  .tips h2 {
+    margin-bottom: 10px;
+    color: #b03570;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+  }
+  .tips ul {
+    padding-left: 20px;
+    font-size: 1.2rem;
+  }
+</style>
+</head>
+<body>
+
+<nav id="sitemap">
+  <a href="#home">🏠 Home</a>
+  <a href="#journey">💖 Journey</a>
+  <a href="#lokasi">📍 Lokasi</a>
+  <a href="#tips">💡 Tips</a>
+</nav>
+
+<h1>Undangan Pernikahan</h1>
+
+<div class="container" id="home">
+  <div class="photo">
+    <img id="fotoPengantin" src="https://via.placeholder.com/250x250.png?text=Foto+Pengantin" alt="Foto Pengantin" />
+    <div class="names">Adit &amp; Bunga</div>
+  </div>
+
+  <p id="namaTamu">Tamu Undangan: </p>
+
+  <p>Tanggal pernikahan: <span id="weddingDateText"></span></p>
+
+  <div class="countdown">
+    <span id="countdown"></span>
+  </div>
+
+  <div class="audio">
+    <audio id="audio" muted autoplay loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+  </div>
+</div>
+
+<div class="container journey" id="journey">
+  <h2>💖 Journey Wedding</h2>
+  <ul id="journeyList"></ul>
+  <p id="journeyDesc">
+    Dari awal kenalan hingga perjalanan cinta kami yang penuh cerita hingga sampai ke hari bahagia ini.  
+    Terima kasih atas dukungan dan doa kalian semua.
+  </p>
+  <img id="journeyPhoto" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Foto Journey" />
+</div>
+
+<div class="container location" id="lokasi">
+  <p>📍 Lokasi Pernikahan: Jalan ABC, Setelah Alfamart, Belok Kiri, Lurus, sebelah kanan</p>
+  <div class="road">
+    <img src="https://cdn.pixabay.com/photo/2014/04/05/04/39/scooter-389145_1280.jpg" alt="motor" class="motor" />
+  </div>
+</div>
+
+<div class="tips" id="tips">
+  <h2>💡 Tips Memberi Amplop Online</h2>
+  <ul>
+    <li>Transfer amplop digital ke rekening pengantin</li>
+    <li>Nomor rekening: <strong>1234 5678 9012 3456 (Bank ABC)</strong></li>
+    <li>Atas nama: <strong>Adit & Bunga</strong></li>
+    <li>Pastikan memasukkan nama Anda sebagai berita transfer</li>
+    <li>Konfirmasi transfer ke pengantin via WA/Telepon</li>
+  </ul>
+  <p>Terima kasih atas doa dan dukungan Anda! ❤️🙏</p>
+</div>
+
+<script>
+  function getParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  const namaTamu = decodeURIComponent(getParam('namaTamu') || 'Tamu');
+  const journeyRaw = 'Kenal 2019, Pacaran 2020, Menikah 2025';
+  const tanggal = '2025-12-12';
+
+  document.getElementById('namaTamu').innerHTML = `Tamu Undangan: <strong>Bapak / Ibu ${namaTamu}</strong>`;
+  document.getElementById('weddingDateText').textContent = new Date(tanggal).toLocaleDateString('id-ID', { year:'numeric', month:'long', day:'numeric' });
+
+  // Journey list
+  const journeyList = document.getElementById('journeyList');
+  journeyList.innerHTML = '';
+  journeyRaw.split(',').forEach((item, i) => {
+    const li = document.createElement('li');
+    li.style.setProperty('--delay', `${0.5 + i * 0.5}s`);
+    li.textContent = item.trim();
+    journeyList.appendChild(li);
+  });
+
+  // Audio unmute after 2 sec
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('audio').muted = false;
+    }, 2000);
+  });
+
+  // Countdown
+  const countDownDate = new Date(tanggal + 'T09:00:00').getTime();
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+
+    if (distance > 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('countdown').textContent = 
+        `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+    } else {
+      document.getElementById('countdown').textContent = 'Sudah menikah ❤️';
+    }
+  }, 1000);
+</script>
+
+</body>
+</html>
