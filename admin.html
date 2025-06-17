@@ -137,6 +137,16 @@
       background: transparent;
       margin: 5px 0;
     }
+
+    #countdownBox {
+      font-size: 1rem;
+      background-color: #ffeef2;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      color: red;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -149,6 +159,8 @@
 
   <div class="admin-container" id="adminArea">
     <h1>Admin Undangan</h1>
+
+    <div id="countdownBox" style="display:none;"></div>
 
     <h2>Pilih Template</h2>
     <div class="template-list" id="templateList">
@@ -200,22 +212,49 @@
 
   <script>
     const KODE_AKSES = "PREMIUMVL";
+    const EXPIRATION_MAP = {
+      '5K': new Date('2025-06-20T15:00:00+07:00'),
+      'TRIAL': new Date('2025-06-17T16:00:00+07:00')
+    };
     let selectedTemplate = 'templateA';
 
     function verifyAccess() {
-      const input = document.getElementById('accessCode').value.trim();
+      const input = document.getElementById('accessCode').value.trim().toUpperCase();
       const loadingText = document.getElementById('loadingText');
 
-      if (input === KODE_AKSES) {
+      if (input === KODE_AKSES || input in EXPIRATION_MAP) {
         loadingText.style.display = "block";
         setTimeout(() => {
           document.getElementById('loginBox').classList.remove('active');
           document.getElementById('adminArea').classList.add('active');
+
+          if (EXPIRATION_MAP[input]) {
+            startCountdown(EXPIRATION_MAP[input]);
+          }
         }, 1500);
       } else {
         alert("Kode salah, silakan coba lagi.");
         setTimeout(() => location.reload(), 500);
       }
+    }
+
+    function startCountdown(expiryTime) {
+      const box = document.getElementById('countdownBox');
+      box.style.display = 'block';
+      const interval = setInterval(() => {
+        const now = new Date();
+        const diff = expiryTime - now;
+        if (diff <= 0) {
+          clearInterval(interval);
+          alert("Sesi Anda telah berakhir.");
+          location.reload();
+          return;
+        }
+        const hours = Math.floor(diff / 1000 / 60 / 60);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        box.textContent = `Sisa waktu: ${hours} jam ${minutes} menit ${seconds} detik`;
+      }, 1000);
     }
 
     function selectTemplate(template) {
