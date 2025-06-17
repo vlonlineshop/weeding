@@ -82,6 +82,14 @@
       text-decoration: none;
       word-wrap: break-word;
       margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #fce4ec;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #f8b9d1;
     }
 
     .undangan-massal-container {
@@ -91,6 +99,23 @@
     .undangan-massal-container input,
     .undangan-massal-container textarea {
       width: calc(100% - 24px);
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+    }
+
+    .popup.active {
+      display: block;
     }
   </style>
 </head>
@@ -122,6 +147,11 @@
       <button onclick="generateBulkLinks()">Buat Link Undangan Massal</button>
       <div id="massalLinks" style="margin-top: 15px;"></div>
     </div>
+  </div>
+
+  <!-- Popup for Salin Link -->
+  <div id="popup" class="popup">
+    Link undangan <span id="popupName"></span> berhasil disalin ke clipboard!
   </div>
 
   <script>
@@ -174,8 +204,9 @@
 
     function copyLink() {
       const link = document.getElementById('generatedLink').href;
+      const name = document.getElementById('namaTamu').value.trim();
       navigator.clipboard.writeText(link).then(() => {
-        alert("Link disalin ke clipboard!");
+        showPopup(name);  // Pass the name to the popup
       });
     }
 
@@ -205,12 +236,17 @@
         linkElement.textContent = url;
         linkElement.style.display = 'block';
 
+        // Add background color to each link
+        linkElement.style.backgroundColor = '#fce4ec';
+        linkElement.style.padding = '10px';
+        linkElement.style.borderRadius = '8px';
+
         // Create a 'Salin' button for each generated link
         const copyButton = document.createElement('button');
         copyButton.textContent = 'Salin Link';
         copyButton.onclick = function() {
           navigator.clipboard.writeText(url).then(() => {
-            alert("Link disalin ke clipboard!");
+            showPopup(name);  // Show popup with specific name
           });
         };
 
@@ -219,6 +255,16 @@
         linkWrapper.appendChild(copyButton);
         massalLinksContainer.appendChild(linkWrapper);
       });
+    }
+
+    // Show popup after copying the link
+    function showPopup(name) {
+      const popup = document.getElementById('popup');
+      document.getElementById('popupName').textContent = name;  // Set the name in the popup message
+      popup.classList.add('active');
+      setTimeout(() => {
+        popup.classList.remove('active');
+      }, 2000);
     }
 
     // Block Right Click, F12 and Ctrl+U
