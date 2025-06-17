@@ -204,7 +204,20 @@
         linkElement.target = '_blank';
         linkElement.textContent = url;
         linkElement.style.display = 'block';
-        massalLinksContainer.appendChild(linkElement);
+
+        // Create a 'Salin' button for each generated link
+        const copyButton = document.createElement('button');
+        copyButton.textContent = 'Salin Link';
+        copyButton.onclick = function() {
+          navigator.clipboard.writeText(url).then(() => {
+            alert("Link disalin ke clipboard!");
+          });
+        };
+
+        const linkWrapper = document.createElement('div');
+        linkWrapper.appendChild(linkElement);
+        linkWrapper.appendChild(copyButton);
+        massalLinksContainer.appendChild(linkWrapper);
       });
     }
 
