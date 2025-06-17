@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Admin Undangan</title>
   <style>
     body {
@@ -89,7 +89,7 @@
   <!-- Login Access -->
   <div class="auth-container active" id="loginBox">
     <h1>Kode Akses Admin</h1>
-    <input id="accessCode" type="password" placeholder="Masukkan Kode Akses">
+    <input id="accessCode" type="password" placeholder="Masukkan Kode Akses" autocomplete="off" />
     <button onclick="verifyAccess()">Masuk</button>
     <p class="loading-text" id="loadingText">Mengalihkan ke halaman admin...</p>
   </div>
@@ -97,13 +97,31 @@
   <!-- Admin Area -->
   <div class="admin-container" id="adminArea">
     <h1>Admin Undangan</h1>
-    <input id="namaTamu" type="text" placeholder="Masukkan Nama Tamu">
+    <input id="namaTamu" type="text" placeholder="Masukkan Nama Tamu" autocomplete="off" />
     <button onclick="generateLink()">Buat Link Undangan</button>
     <a id="generatedLink" target="_blank" style="display: none;"></a>
     <button onclick="copyLink()" id="copyBtn" style="display: none;">Salin Link</button>
   </div>
 
   <script>
+    // Nonaktifkan Ctrl+U, F12, Ctrl+Shift+I, klik kanan
+    document.addEventListener('keydown', function (e) {
+      if (
+        (e.ctrlKey && e.key.toLowerCase() === 'u') ||
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i')
+      ) {
+        e.preventDefault();
+        alert("Akses developer tools diblokir.");
+      }
+    });
+
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+      alert("Klik kanan dinonaktifkan.");
+    });
+
+    // Kode akses admin (harus pindah ke server utk keamanan beneran)
     const KODE_AKSES = "PREMIUMVL";
 
     function verifyAccess() {
@@ -112,7 +130,6 @@
 
       if (input === KODE_AKSES) {
         loadingText.style.display = "block";
-
         setTimeout(() => {
           document.getElementById('loginBox').classList.remove('active');
           document.getElementById('adminArea').classList.add('active');
