@@ -22,16 +22,17 @@
       background: #fff;
       padding: 30px 25px;
       border-radius: 20px;
-      max-width: 400px;
+      max-width: 600px;
       width: 100%;
       box-shadow: 0 0 20px 5px rgba(255, 156, 201, 0.3);
       text-align: center;
       display: none;
+      flex-direction: column;
     }
 
     .auth-container.active,
     .admin-container.active {
-      display: block;
+      display: flex;
     }
 
     h1 {
@@ -41,7 +42,8 @@
     }
 
     input[type="password"],
-    input[type="text"] {
+    input[type="text"],
+    textarea {
       width: 100%;
       padding: 12px;
       font-size: 1rem;
@@ -49,6 +51,7 @@
       border-radius: 10px;
       margin-bottom: 20px;
       box-sizing: border-box;
+      resize: vertical;
     }
 
     button {
@@ -62,6 +65,7 @@
       cursor: pointer;
       transition: background 0.3s ease;
       margin-bottom: 10px;
+      align-self: flex-start;
     }
 
     button:hover {
@@ -75,12 +79,50 @@
       margin-top: 15px;
     }
 
-    a {
-      display: block;
+    a.link-undangan {
+      display: inline-block;
       color: #ff5ca1;
       text-decoration: none;
       word-wrap: break-word;
-      margin-bottom: 10px;
+      margin: 5px 0;
+      max-width: 100%;
+      font-size: 0.95rem;
+    }
+
+    .link-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .copy-link-btn {
+      background: #b03570;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .copy-link-btn:hover {
+      background: #8a2a57;
+    }
+
+    #linksContainer {
+      margin-top: 15px;
+      width: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      background: #ffe3f1;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: left;
+      box-sizing: border-box;
     }
   </style>
 </head>
@@ -97,10 +139,22 @@
   <!-- Admin Area -->
   <div class="admin-container" id="adminArea">
     <h1>Admin Undangan</h1>
+
+    <!-- Input Nama Tamu Tunggal -->
     <input id="namaTamu" type="text" placeholder="Masukkan Nama Tamu" autocomplete="off" />
-    <button onclick="generateLink()">Buat Link Undangan</button>
-    <a id="generatedLink" target="_blank" style="display: none;"></a>
+    <button onclick="generateSingleLink()">Buat Link Undangan</button>
+
+    <a id="generatedLink" target="_blank" style="display: none; margin-bottom: 10px;"></a>
     <button onclick="copyLink()" id="copyBtn" style="display: none;">Salin Link</button>
+
+    <hr style="width: 100%; margin: 25px 0; border: 1px solid #ff9cc9; border-radius: 5px;" />
+
+    <!-- Input Massal -->
+    <label for="namaMassal" style="align-self: flex-start; margin-bottom: 8px; font-weight: bold;">Input Nama Tamu Massal (satu nama per baris):</label>
+    <textarea id="namaMassal" rows="6" placeholder="Contoh:&#10;Andi&#10;Budi&#10;Citra"></textarea>
+    <button onclick="generateBulkLinks()">Buat Link Undangan Massal</button>
+
+    <div id="linksContainer"></div>
   </div>
 
   <script>
@@ -121,7 +175,6 @@
       alert("Klik kanan dinonaktifkan.");
     });
 
-    // Kode akses admin (harus pindah ke server utk keamanan beneran)
     const KODE_AKSES = "PREMIUMVL";
 
     function verifyAccess() {
@@ -146,18 +199,17 @@
       return str.replace(/\b\w/g, char => char.toUpperCase());
     }
 
-    function generateLink() {
+    // Generate link untuk 1 nama
+    function generateSingleLink() {
       let name = document.getElementById('namaTamu').value.trim();
       if (name === '') {
         alert('Silakan masukkan nama tamu terlebih dahulu.');
         return;
       }
-
       if (!/^[a-zA-Z\s]+$/.test(name)) {
         alert("Nama hanya boleh mengandung huruf dan spasi.");
         return;
       }
-
       name = capitalizeWords(name);
       const url = `${location.origin}/weeding/index.html?nama=${encodeURIComponent(name)}`;
       const link = document.getElementById('generatedLink');
@@ -172,6 +224,62 @@
       const link = document.getElementById('generatedLink').href;
       navigator.clipboard.writeText(link).then(() => {
         alert("Link disalin ke clipboard!");
+      });
+    }
+
+    // Generate links massal
+    function generateBulkLinks() {
+      const rawText = document.getElementById('namaMassal').value.trim();
+      if (rawText === '') {
+        alert("Masukkan minimal satu nama tamu.");
+        return;
+      }
+      const names = rawText.split('\n')
+        .map(name => name.trim())
+        .filter(name => name.length > 0);
+
+      if (names.length === 0) {
+        alert("Tidak ada nama valid ditemukan.");
+        return;
+      }
+
+      // Validasi semua nama
+      for (const name of names) {
+        if (!/^[a-zA-Z\s]+$/.test(name)) {
+          alert(`Nama "${name}" mengandung karakter tidak valid. Hanya huruf dan spasi diperbolehkan.`);
+          return;
+        }
+      }
+
+      const container = document.getElementById('linksContainer');
+      container.innerHTML = ''; // reset
+
+      names.forEach(name => {
+        const capName = capitalizeWords(name);
+        const url = `${location.origin}/weeding/index.html?nama=${encodeURIComponent(capName)}`;
+
+        // buat elemen
+        const row = document.createElement('div');
+        row.classList.add('link-row');
+
+        const link = document.createElement('a');
+        link.className = 'link-undangan';
+        link.href = url;
+        link.target = "_blank";
+        link.textContent = url;
+
+        const btnCopy = document.createElement('button');
+        btnCopy.className = 'copy-link-btn';
+        btnCopy.textContent = 'Salin';
+        btnCopy.addEventListener('click', () => {
+          navigator.clipboard.writeText(url).then(() => {
+            alert(`Link undangan untuk "${capName}" berhasil disalin!`);
+          });
+        });
+
+        row.appendChild(link);
+        row.appendChild(btnCopy);
+        container.appendChild(row);
       });
     }
   </script>
