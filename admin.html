@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Admin Undangan</title>
+<style>
+body {
+    margin: 0;
+    font-family:'Helvetica', sans-serif;
+    color: #ff5ca1;
+    background: #ffedf5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px 5px #ff9cc9;
+    text-align: center;
+}
+
+.container h1 {
+    margin-bottom: 20px;
+}
+
+.container input {
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: 2px solid #ff9cc9;
+    border-radius: 10px;
+}
+
+.container button {
+    padding: 10px 20px;
+    background: #ff9cc9;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.container a {
+    display: block;
+    color: #ff5ca1;
+    text-decoration: none;
+    word-wrap: break-word;
+    margin-bottom: 20px;
+}
+</style>
+</head>
+<body>
+<h1>Admin Undangan</h1>
+<div class="container">
+    <input id="namaTamu" type="text" placeholder="Masukkan Nama Tamu">
+    <button onclick="generateLink()">Buat Link Undangan</button>
+    <a id="generatedLink" target="_blank" style="display: none;"></a>
+</div>
+
+<script>
+function generateLink(){
+    const name = document.getElementById('namaTamu').value.trim()
+    if (name==='') {
+        alert('Silakan masukkan nama tamu terlebih dahulu.')
+        return;
+    }
+    // Ganti URL sesuai domain/hosting nantinya
+    const url = `${location.origin}/undangan.html?nama=${encodeURIComponent(name)}`
+    const link = document.getElementById('generatedLink')
+    link.href = url
+    link.textContent = url
+    link.style.display = 'block'
+}
+</script>
+</body>
+</html>
