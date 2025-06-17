@@ -22,7 +22,7 @@
       background: #fff;
       padding: 30px 25px;
       border-radius: 20px;
-      max-width: 800px;
+      max-width: 700px;
       width: 100%;
       box-shadow: 0 0 20px 5px rgba(255, 156, 201, 0.3);
       text-align: center;
@@ -34,33 +34,34 @@
       display: block;
     }
 
-    h1, h2, h3 {
+    h1, h2 {
       color: #ff5ca1;
     }
 
     input[type="password"],
     input[type="text"],
+    input[type="date"],
     textarea {
       width: 100%;
       padding: 12px;
       font-size: 1rem;
       border: 2px solid #ff9cc9;
       border-radius: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       box-sizing: border-box;
     }
 
     button {
-      padding: 10px 15px;
+      padding: 12px 20px;
       background: #ff5ca1;
       color: white;
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: bold;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       transition: background 0.3s ease;
-      margin-top: 8px;
+      margin-bottom: 10px;
     }
 
     button:hover {
@@ -72,26 +73,6 @@
       color: #777;
       font-size: 0.95rem;
       margin-top: 15px;
-    }
-
-    a {
-      display: block;
-      color: #ff5ca1;
-      text-decoration: none;
-      word-wrap: break-word;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      background-color: #fce4ec;
-      transition: background-color 0.3s ease;
-    }
-
-    a:hover {
-      background-color: #f8b9d1;
-    }
-
-    .undangan-massal-container {
-      margin-top: 20px;
     }
 
     .popup {
@@ -111,35 +92,18 @@
       display: block;
     }
 
-    .template-list {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
+    .section {
+      margin: 30px 0;
+      text-align: left;
     }
 
-    .template-item {
-      border: 2px solid #ff9cc9;
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-      width: 120px;
-    }
-
-    .template-item img {
-      width: 100px;
-      border-radius: 10px;
-    }
-
-    .template-item a {
-      font-size: 0.85rem;
-      color: #ff5ca1;
-      background: transparent;
-      margin: 5px 0;
+    .section h2 {
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
+
   <div class="auth-container active" id="loginBox">
     <h1>Kode Akses Admin</h1>
     <input id="accessCode" type="password" placeholder="Masukkan Kode Akses">
@@ -150,43 +114,25 @@
   <div class="admin-container" id="adminArea">
     <h1>Admin Undangan</h1>
 
-    <h2>Pilih Template</h2>
-    <div class="template-list" id="templateList">
-      <div class="template-item">
-        <img src="preview/templateA.jpg" alt="Template A">
-        <button onclick="selectTemplate('templateA')">Pilih Template A</button>
-        <a href="/weeding/templateA/index.html" target="_blank">Lihat Demo</a>
-      </div>
-      <div class="template-item">
-        <img src="preview/templateB.jpg" alt="Template B">
-        <button onclick="selectTemplate('templateB')">Pilih Template B</button>
-        <a href="/weeding/templateB/index.html" target="_blank">Lihat Demo</a>
-      </div>
-      <div class="template-item">
-        <img src="preview/templateC.jpg" alt="Template C">
-        <button onclick="selectTemplate('templateC')">Pilih Template C</button>
-        <a href="/weeding/templateC/index.html" target="_blank">Lihat Demo</a>
-      </div>
-      <div class="template-item">
-        <img src="preview/templateD.jpg" alt="Template D">
-        <button onclick="selectTemplate('templateD')">Pilih Template D</button>
-        <a href="/weeding/templateD/index.html" target="_blank">Lihat Demo</a>
-      </div>
-      <div class="template-item">
-        <img src="preview/templateE.jpg" alt="Template E">
-        <button onclick="selectTemplate('templateE')">Pilih Template E</button>
-        <a href="/weeding/templateE/index.html" target="_blank">Lihat Demo</a>
-      </div>
+    <div class="section">
+      <h2>Custom Data Undangan</h2>
+      <input type="date" id="tanggalPernikahan" placeholder="Tanggal Pernikahan">
+      <textarea id="perjalananCinta" placeholder="Isi Perjalanan Cinta / Journey"></textarea>
+      <textarea id="tentangAcara" placeholder="Tentang Acara (deskripsi)"></textarea>
+      <input type="text" id="lokasiAcara" placeholder="Alamat Lokasi Acara">
+      <input type="text" id="googleMapsLink" placeholder="Link Google Maps">
+      <input type="file" id="galeriFoto" accept="image/*" multiple>
     </div>
-    <p id="templateSelected" style="text-align: center; margin-top: 10px; color: green;">Template yang dipilih: templateA</p>
 
-    <h2>Buat Link Undangan</h2>
-    <input id="namaTamu" type="text" placeholder="Masukkan Nama Tamu">
-    <button onclick="generateLink()">Buat Link Undangan</button>
-    <a id="generatedLink" target="_blank" style="display: none;"></a>
-    <button onclick="copyLink()" id="copyBtn" style="display: none;">Salin Link</button>
+    <div class="section">
+      <h2>Buat Link Undangan untuk Tamu</h2>
+      <input id="namaTamu" type="text" placeholder="Masukkan Nama Tamu">
+      <button onclick="generateLink()">Buat Link Undangan</button>
+      <a id="generatedLink" target="_blank" style="display: none;"></a>
+      <button onclick="copyLink()" id="copyBtn" style="display: none;">Salin Link</button>
+    </div>
 
-    <div class="undangan-massal-container">
+    <div class="section">
       <h2>Undangan Massal</h2>
       <textarea id="massalNamaTamu" rows="5" placeholder="Masukkan nama tamu (pisahkan dengan baris baru)"></textarea>
       <button onclick="generateBulkLinks()">Buat Link Undangan Massal</button>
@@ -200,7 +146,6 @@
 
   <script>
     const KODE_AKSES = "PREMIUMVL";
-    let selectedTemplate = 'templateA';
 
     function verifyAccess() {
       const input = document.getElementById('accessCode').value.trim();
@@ -211,16 +156,12 @@
         setTimeout(() => {
           document.getElementById('loginBox').classList.remove('active');
           document.getElementById('adminArea').classList.add('active');
+          loadCustomData();
         }, 1500);
       } else {
         alert("Kode salah, silakan coba lagi.");
         setTimeout(() => location.reload(), 500);
       }
-    }
-
-    function selectTemplate(template) {
-      selectedTemplate = template;
-      document.getElementById('templateSelected').textContent = `Template yang dipilih: ${template}`;
     }
 
     function capitalizeWords(str) {
@@ -229,14 +170,13 @@
 
     function generateLink() {
       let name = document.getElementById('namaTamu').value.trim();
-      if (!name || !/^[a-zA-Z\s]+$/.test(name)) return alert("Masukkan nama valid (hanya huruf dan spasi).");
-
+      if (!name) return alert('Masukkan nama tamu.');
+      if (!/^[a-zA-Z\s]+$/.test(name)) return alert("Nama hanya huruf dan spasi.");
       name = capitalizeWords(name);
-      const url = `${location.origin}/weeding/${selectedTemplate}/index.html?nama=${encodeURIComponent(name)}`;
-      const link = document.getElementById('generatedLink');
-      link.href = url;
-      link.textContent = url;
-      link.style.display = 'block';
+      const url = `${location.origin}/weeding/index.html?nama=${encodeURIComponent(name)}`;
+      document.getElementById('generatedLink').href = url;
+      document.getElementById('generatedLink').textContent = url;
+      document.getElementById('generatedLink').style.display = 'block';
       document.getElementById('copyBtn').style.display = 'inline-block';
     }
 
@@ -247,41 +187,57 @@
     }
 
     function generateBulkLinks() {
-      const names = document.getElementById('massalNamaTamu').value.trim().split("\n").filter(n => n);
+      const names = document.getElementById('massalNamaTamu').value.trim().split("\n").map(x => x.trim()).filter(x => x);
       const container = document.getElementById('massalLinks');
       container.innerHTML = '';
 
       names.forEach(name => {
-        if (!/^[a-zA-Z\s]+$/.test(name)) return;
+        if (!/^[a-zA-Z\s]+$/.test(name)) return alert("Nama hanya huruf dan spasi.");
         name = capitalizeWords(name);
-        const url = `${location.origin}/weeding/${selectedTemplate}/index.html?nama=${encodeURIComponent(name)}`;
-
-        const linkEl = document.createElement('a');
-        linkEl.href = url;
-        linkEl.textContent = url;
-        linkEl.target = '_blank';
+        const url = `${location.origin}/weeding/index.html?nama=${encodeURIComponent(name)}`;
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.textContent = url;
+        link.style.backgroundColor = '#fce4ec';
+        link.style.padding = '10px';
+        link.style.borderRadius = '8px';
 
         const btn = document.createElement('button');
         btn.textContent = 'Salin Link';
         btn.onclick = () => navigator.clipboard.writeText(url).then(() => showPopup(name));
 
-        const wrap = document.createElement('div');
-        wrap.appendChild(linkEl);
-        wrap.appendChild(btn);
-        container.appendChild(wrap);
+        const wrapper = document.createElement('div');
+        wrapper.appendChild(link);
+        wrapper.appendChild(btn);
+        container.appendChild(wrapper);
       });
     }
 
     function showPopup(name) {
-      const popup = document.getElementById('popup');
       document.getElementById('popupName').textContent = name;
+      const popup = document.getElementById('popup');
       popup.classList.add('active');
       setTimeout(() => popup.classList.remove('active'), 2000);
     }
 
+    // AutoSave + Load Custom Data
+    const inputs = ['tanggalPernikahan', 'perjalananCinta', 'tentangAcara', 'lokasiAcara', 'googleMapsLink'];
+    inputs.forEach(id => {
+      const el = document.getElementById(id);
+      el?.addEventListener('input', () => localStorage.setItem(id, el.value));
+    });
+
+    function loadCustomData() {
+      inputs.forEach(id => {
+        const saved = localStorage.getItem(id);
+        if (saved) document.getElementById(id).value = saved;
+      });
+    }
+
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', e => {
-      if (e.key === 'F12' || (e.ctrlKey && e.key === 'u')) e.preventDefault();
+      if (e.key === 'F12' || (e.ctrlKey && e.key.toLowerCase() === 'u')) e.preventDefault();
     });
   </script>
 </body>
