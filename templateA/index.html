@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Undangan Pernikahan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      padding-bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    nav#sitemap {
+      background: #222;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 30px;
+      margin: 15px 0;
+      padding: 12px 0;
+      box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-around;
+      font-weight: 700;
+      font-size: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav#sitemap a {
+      color: #e0e0e0;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      transition: 0.3s;
+    }
+    nav#sitemap a:hover {
+      background: #444;
+      transform: scale(1.05);
+    }
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      color: #d4af37;
+      font-size: 3rem;
+      margin: 20px 0 10px;
+      text-align: center;
+    }
+    .sapaan {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #bbbbbb;
+      text-align: center;
+    }
+    .container, .location {
+      transition: filter 0.3s ease;
+    }
+    .blur {
+      filter: blur(4px);
+      pointer-events: none;
+    }
+    .container {
+      margin: 20px;
+      padding: 20px;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+      text-align: center;
+      max-width: 400px;
+    }
+    .photo-names img {
+      max-width: 250px;
+      border-radius: 50%;
+      border: 4px solid #d4af37;
+      box-shadow: 0 0 15px #d4af3770;
+    }
+    .names {
+      margin-top: 15px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: #d4af37;
+    }
+    .countdown {
+      margin-top: 15px;
+      font-size: 1.4rem;
+      background: #2b2b2b;
+      border-radius: 15px;
+      padding: 10px;
+      box-shadow: inset 0 0 10px #000;
+      font-weight: bold;
+      color: #ffffff;
+    }
+    .location {
+      width: 100%;
+      max-width: 420px;
+      border: 2px solid #444;
+      background: #1e1e1e;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .location-detail {
+      padding: 15px;
+      text-align: center;
+      font-size: 1rem;
+      color: #ccc;
+    }
+    .location-detail h3 {
+      margin-top: 0;
+      color: #d4af37;
+      font-size: 1.3rem;
+    }
+    .map-link {
+      display: inline-block;
+      margin-top: 8px;
+      text-decoration: none;
+      background: #d4af37;
+      color: #000;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    .map-link:hover {
+      background: #c19d2d;
+    }
+    .gallery img {
+      width: 100%;
+      max-width: 300px;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+      transition: 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    .container button {
+      background-color: #d4af37;
+      color: #000;
+      padding: 12px 25px;
+      border-radius: 20px;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .container button:hover {
+      background-color: #c19d2d;
+      transform: translateY(-2px);
+    }
+    .container button:active {
+      transform: translateY(1px);
+    }
+    input, select {
+      margin: 10px 5px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #555;
+      background: #2c2c2c;
+      color: #fff;
+      font-size: 1rem;
+      width: 80%;
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+<nav id="sitemap">
+  <a href="#home">🏠 Home</a>
+  <a href="#journey">💖 Journey</a>
+  <a href="#galeri">📸 Galeri</a>
+  <a href="#tentang">📜 Tentang</a>
+  <a href="#lokasi">📍 Lokasi</a>
+  <a href="#rsvp">📩 RSVP</a>
+</nav>
+
+<h1>Undangan Pernikahan</h1>
+<p class="sapaan" id="sapaanNama"></p>
+
+<div class="container" id="home">
+  <div class="photo-names">
+    <img src="https://i.pinimg.com/736x/bd/e6/63/bde6632648dfb57d0ce2d21f09f9fcd0.jpg" alt="Foto Pengantin">
+    <div class="names">Adit &amp; Bunga</div>
+    25 Mei 2026
+  </div>
+  <div class="countdown" id="countdown"></div>
+</div>
+
+<div class="container" id="journey">
+  <h2>💖 Perjalanan Cinta</h2>
+  <ul>
+    <li><strong>2017 - Pacaran</strong><br><small>Mulai berkenalan dan menjalani kisah cinta.</small></li>
+    <li><strong>2019 - Lamaran</strong><br><small>Momen lamaran yang berkesan dan bahagia.</small></li>
+    <li><strong>2025 - Menikah</strong><br><small>Resmi menjadi pasangan hidup selamanya.</small></li>
+  </ul>
+</div>
+
+<div class="container gallery" id="galeri">
+  <h2>📸 Galeri Foto</h2>
+  <img src="https://i.pinimg.com/originals/12/ea/1f/12ea1f69aa3a1182c74107a5b71610e5.jpg" alt="Foto Galeri 1">
+  <img src="https://i.pinimg.com/originals/9e/eb/fc/9eebfc617e9ef1f2b3fae36cf9173c2c.jpg" alt="Foto Galeri 2">
+</div>
+
+<div class="container" id="tentang">
+  <h2>📜 Tentang Acara</h2>
+  <p>Acara pernikahan ini adalah momen spesial yang kami nantikan sejak lama. Kami berharap kehadiran Anda bisa turut meramaikan dan memberikan doa restu.</p>
+</div>
+
+<div class="location" id="lokasi">
+  <div class="location-detail">
+    <h3>📍 Lokasi Acara</h3>
+    <p><strong>Gedung Serbaguna Harmoni</strong><br>Jl. Melati No. 88, Jakarta Selatan</p>
+    <p>⏰ Sabtu, 12 Desember 2025 - Pukul 09:00 WIB</p>
+    <a href="https://maps.app.goo.gl/SPLyPUwArupCi9d56" target="_blank" class="map-link">🗺️ Lihat di Google Maps</a>
+  </div>
+</div>
+
+<div class="container rsvp" id="rsvp">
+  <h2>📩 RSVP Kehadiran</h2>
+  <input type="text" id="rsvpNama" placeholder="Nama Anda" />
+  <select id="rsvpStatus">
+    <option value="Hadir">Hadir</option>
+    <option value="Tidak Hadir">Tidak Hadir</option>
+  </select>
+  <button onclick="kirimRSVP()">Kirim ke WhatsApp</button>
+</div>
+
+<script>
+  const tanggal = '2025-06-19T09:00:00';
+  const countdown = document.getElementById('countdown');
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const eventTime = new Date(tanggal).getTime();
+    const distance = eventTime - now;
+    if (distance > 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      countdown.textContent = `${days} hari ${hours} jam ${minutes} menit ${seconds} detik menuju hari bahagia.`;
+    } else {
+      countdown.textContent = 'Kami sudah menikah ❤️';
+    }
+  }, 1000);
+
+  function kirimRSVP() {
+    const nama = document.getElementById('rsvpNama').value.trim();
+    const status = document.getElementById('rsvpStatus').value;
+    if (!nama) return alert('Masukkan nama terlebih dahulu');
+    const pesan = `Halo Adit & Bunga! Saya *${nama}* akan *${status}* pada acara pernikahan.`;
+    const wa = `https://wa.me/6281234567890?text=${encodeURIComponent(pesan)}`;
+    window.open(wa, '_blank');
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const nama = params.get('nama');
+    if (nama) {
+      const decodedNama = decodeURIComponent(nama.replace(/\+/g, ' '));
+      document.getElementById('rsvpNama').value = decodedNama;
+      document.getElementById('sapaanNama').textContent = `Halo, ${decodedNama}!`;
+    }
+  });
+
+  const sitemapLinks = document.querySelectorAll('#sitemap a');
+  sitemapLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.getAttribute('href').replace('#', '');
+      const allSections = ['home', 'journey', 'galeri', 'tentang', 'lokasi', 'rsvp'];
+      allSections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (id !== target) {
+            el.classList.add('blur');
+          } else {
+            el.classList.remove('blur');
+          }
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
